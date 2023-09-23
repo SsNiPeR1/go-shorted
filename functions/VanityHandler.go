@@ -23,7 +23,18 @@ func VanityHandler(db *sql.DB) gin.HandlerFunc {
 		url := c.PostForm("url")
 		shorted := c.PostForm("shorted")
 
-		_, err := db.Exec("INSERT INTO urls (url, shorted, created_at) VALUES ($1, $2, $3)", url, shorted, time)
+		// check if the shorted URL is already in the database
+		var shorted_check string
+		err := db.QueryRow("SELECT shorted FROM urls WHERE shorted = $1", shorted).Scan(&shorted_check)
+		if err == nil {
+			c.JSON(403, gin.H{
+				"status": "error",
+				"error":  "shorted URL already exists",
+			})
+			return
+		}
+
+		_, err = db.Exec("INSERT INTO urls (url, shorted, created_at) VALUES ($1, $2, $3)", url, shorted, time)
 		if err != nil {
 			c.JSON(500, gin.H{
 				"status": "error",
