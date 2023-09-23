@@ -7,8 +7,8 @@ import (
 	"database/sql"
 
 	"github.com/SsNiPeR1/go-shorted/config"
-	"github.com/SsNiPeR1/go-shorted/functions"
-	api "github.com/SsNiPeR1/go-shorted/functions/API"
+	"github.com/SsNiPeR1/go-shorted/handlers"
+	api "github.com/SsNiPeR1/go-shorted/handlers/API"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -24,10 +24,10 @@ func main() {
 	}
 
 	// Add the routes
-	r.GET("/", functions.IndexHandler)
-	r.GET("/static/:file", functions.StaticHandler)
-	r.GET("/:shorted", functions.RedirectHandler(db)) // :shorted is a parameter which can be accessed with c.Param("shorted")
-	r.POST("/shorten", functions.ShortenHandler(db))  // POST is needed to transfer data from the form to the server
+	r.GET("/", handlers.IndexHandler)
+	r.GET("/static/:file", handlers.StaticHandler)
+	r.GET("/:shorted", handlers.RedirectHandler(db)) // :shorted is a parameter which can be accessed with c.Param("shorted")
+	r.POST("/shorten", handlers.ShortenHandler(db))  // POST is needed to transfer data from the form to the server
 
 	// API routes
 	r.POST("/api/v1/vanity", api.VanityHandler(db))
