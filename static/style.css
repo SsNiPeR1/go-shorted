@@ -39,16 +39,23 @@ input {
   color: #909090;
   background-color: #191919;
   border-radius: 5px;
-  border: 1.5px solid #262626;
+  border: 1.5px solid #404040;
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: 20px;
 
   outline-width: 0px;
   outline-style: solid;
-  outline-color: #262626;
+  outline-color: #404040;
 
   font-family: 'Inconsolata', monospace;
   transition: all 0.3s ease-in-out;
+  height: 50px;
+  width: 500px;
+
+  /* center placeholder text scale */
+  text-align: center;
+  text-align-last: center;
+  text-justify: center;
 }
 
 ::placeholder {
