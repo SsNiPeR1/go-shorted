@@ -55,6 +55,9 @@ func ShortenHandler(db *sql.DB) gin.HandlerFunc {
 
 			err := db.QueryRow("SELECT shorted FROM urls WHERE shorted = $1", shorted).Scan(&shorted)
 			if err != nil {
+				if shorted == "vanity" {
+					continue // reserved for vanity URL API endpoint, this check will be removed in the future when full fledged API will be available on /v1/api
+				}
 				break // means that the shorted URL doesn't exist in the database, therefore can be used
 			}
 		}
