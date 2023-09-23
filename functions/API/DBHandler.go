@@ -1,4 +1,4 @@
-package functions
+package api
 
 import (
 	"database/sql"
