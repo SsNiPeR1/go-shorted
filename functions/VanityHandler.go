@@ -2,6 +2,7 @@ package functions
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/SsNiPeR1/go-shorted/config"
 	"github.com/gin-gonic/gin"
@@ -18,10 +19,11 @@ func VanityHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
+		time := int32(time.Now().Unix())
 		url := c.PostForm("url")
 		shorted := c.PostForm("shorted")
 
-		_, err := db.Exec("INSERT INTO urls (url, shorted) VALUES ($1, $2)", url, shorted)
+		_, err := db.Exec("INSERT INTO urls (url, shorted, created_at) VALUES ($1, $2, $3)", url, shorted, time)
 		if err != nil {
 			c.JSON(500, gin.H{
 				"status": "error",
